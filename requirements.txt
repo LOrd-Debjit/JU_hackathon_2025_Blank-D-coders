@@ -1,0 +1,30 @@
+
+# --- Core Framework ---
+flask==3.1.1
+flask-cors
+python-dotenv==1.1.0
+requests
+gunicorn
+
+# --- LangChain & Ecosystem (Stable versions synced) ---
+langchain==0.3.26
+langchain-core==0.3.71
+langchain-community==0.3.26
+
+langchain-google-genai==2.0.4
+langchain-pinecone==0.2.8
+langchain-huggingface==0.3.0
+
+# --- Vector Stores / Embeddings ---
+
+sentence-transformers==4.1.0
+pypdf
+
+sarvamai
+# --- Maps / Geo APIs ---
+googlemaps
+
+#
+
+# --- Local Package Install ---
+-e .

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kolkata Tourism Chatbot</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at center, #15002e, #000010);
+      font-family: 'Poppins', sans-serif;
+      color: #fff;
+      overflow: hidden;
+    }
+    .hero { text-align: center; animation: fadeIn 1.8s ease; }
+    .hero img {
+      width: 260px; height: 260px; border-radius: 50%;
+      box-shadow: 0 0 70px rgba(167, 114, 255, 0.9);
+      animation: pulse 2.5s infinite alternate;
+    }
+    .hero h1 {
+      margin-top: 35px; font-size: 2.8rem; font-weight: 600;
+      background: linear-gradient(90deg, #a772ff, #6e32ff);
+      background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      letter-spacing: 1px;
+    }
+    .hero p { margin-top: 15px; color: #c9b8ff; font-size: 1.3rem; letter-spacing: 0.6px; }
+    .hero button {
+      margin-top: 40px; padding: 16px 45px; font-size: 1.1rem; font-weight: 500;
+      background: linear-gradient(90deg, #6e32ff, #a772ff);
+      border: none; border-radius: 40px; color: #fff; cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hero button:hover { transform: scale(1.08); box-shadow: 0 0 25px #a772ff; }
+
+    /* Start Chatting secondary button */
+    .start-chat-btn {
+      margin-top: 16px; padding: 14px 26px; font-size: 1.05rem; font-weight: 500;
+      display: inline-flex; align-items: center; gap: 10px;
+      background: linear-gradient(90deg, #F57C00, #FFC107);
+      border: none; border-radius: 40px; color: #1d1300; cursor: pointer;
+      box-shadow: 0 0 18px rgba(255,193,7,.35);
+    }
+    .start-chat-btn:hover { filter: brightness(0.95); }
+
+    @keyframes pulse {
+      from { transform: scale(1); box-shadow: 0 0 40px rgba(167, 114, 255, 0.5); }
+      to   { transform: scale(1.12); box-shadow: 0 0 80px rgba(167, 114, 255, 1); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="hero">
+    <img src="{{ url_for('static', filename='pictures/icon_ju.png') }}" alt="Kolkata Travel Chatbot Icon" />
+    <h1>Meet Your Travel Companion — BabuMoshai</h1>
+    <p>Your personal AI guide to explore Kolkata like never before.</p>
+
+    <!-- Start Planning (fixed to url_for('plan')) -->
+    <button onclick="window.location.href='{{ url_for('plan') }}'">Start Planning</button>
+
+    <!-- Start Chatting (your icon) -->
+    <button id="chat-btn" class="start-chat-btn">
+      <img src="{{ url_for('static', filename='pictures/icon_ju.png') }}" alt="Chat Icon"
+           class="chat-icon" style="width:22px;height:22px;border-radius:6px;">
+      <span>Start Chatting</span>
+    </button>
+  </div>
+
+  <!-- Hook: go to GET /chat page -->
+  <script>
+    document.getElementById('chat-btn')?.addEventListener('click', () => {
+      window.location.href = "{{ url_for('chat_page') }}";
+    });
+  </script>
+</body>
+</html>

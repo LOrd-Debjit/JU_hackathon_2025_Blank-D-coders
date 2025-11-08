@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BabuMoshai - AI Tourism Chatbot</title>
+  
+</head>
+<body class="chat-body">
+  <div class="container">
+    <aside class="sidebar">
+      <h2>🌐 Language</h2>
+      <select id="language">
+        {% for lang in languages %}
+        <option value="{{ lang }}">{{ lang }}</option>
+        {% endfor %}
+      </select>
+      <hr />
+      <h3>About</h3>
+      <p>Ask me about any landmark, food, or culture of Kolkata. I can show you maps too!</p>
+    </aside>
+
+    <main class="chatbox" id="chatbox">
+      <div id="chat-container"></div>
+      <div class="input-area">
+        <input type="text" id="user-input" placeholder="Ask about Kolkata..." />
+        <button id="send-btn">Send</button>
+        <button id="mic-btn">🎤 Speak</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>

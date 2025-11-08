@@ -1,0 +1,225 @@
+{% set TITLE = TITLE or "Kolkata Tourism" %}
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>{{ TITLE }}</title>
+
+  <!-- Tailwind + fonts -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#FFC107",
+            secondary: "#D32F2F",
+            accent: "#F57C00",
+            "background-light": "#FFF8E1",
+            "text-light": "#4E342E",
+            "surface-light": "#FFFFFF",
+            "border-light": "#D7CCC8"
+          },
+          fontFamily: { display: ["Space Grotesk","sans-serif"] },
+          borderRadius: { xl: "1.25rem" }
+        }
+      }
+    }
+  </script>
+  <style type="text/tailwindcss">
+    body{@apply bg-background-light text-text-light font-display;}
+    .btn{@apply inline-flex items-center justify-center rounded-full h-10 px-4 font-bold transition;}
+    .btn-amber{@apply bg-primary text-text-light hover:opacity-90;}
+    .btn-ghost{@apply bg-white/80 text-text-light hover:bg-white;}
+    .btn-orange{@apply bg-accent text-white hover:brightness-95;}
+    .card{@apply flex flex-col bg-surface-light rounded-xl shadow hover:shadow-lg transition;}
+  </style>
+
+  <script>
+    /* Endpoints for JS */
+    window.APP_CONFIG = {
+      chatPage: "{{ url_for('chat_page') }}",
+      planPage: "{{ url_for('plan') }}"
+    };
+  </script>
+
+  {% block head_extra %}{% endblock %}
+</head>
+<body class="min-h-screen">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 w-full bg-background-light/80 backdrop-blur border-b border-border-light">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
+      <a href="{{ url_for('index') }}" class="flex items-center gap-2">
+        <img src="{{ url_for('static', filename='pictures/icon_ju.png') }}" alt="logo" class="w-7 h-7 rounded-lg" />
+        <span class="font-bold">Kolkata Tourism</span>
+      </a>
+      <!-- UPDATED NAV -->
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a class="font-medium text-accent" href="{{ url_for('index') }}">Home</a>
+       
+        <a class="hover:text-accent" href="{{ url_for('chat_page') }}">Chat</a>
+      </nav>
+      <div class="hidden md:flex gap-2">
+        <button class="btn h-9 px-3 bg-secondary text-white">Login</button>
+        <button class="btn h-9 px-3 bg-accent text-white/95">Sign Up</button>
+      </div>
+      <button class="md:hidden rounded-full p-2 bg-white/80">
+        <span class="material-symbols-outlined">menu</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- PAGE CONTENT -->
+  {% block content %}
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10 sm:space-14">
+
+    <!-- Hero -->
+    <section class="pt-5">
+      <div class="bg-cover bg-center rounded-2xl overflow-hidden"
+           style="background-image:linear-gradient(rgba(30,20,18,.35),rgba(30,20,18,.8)),url('https://images.unsplash.com/photo-1536421469767-80559bb6f5e1?fm=jpg&q=60&w=2400')">
+        <div class="px-6 sm:px-10 lg:px-16 py-14 sm:py-20 text-center">
+          <h1 class="text-white text-3xl sm:text-5xl font-extrabold">Experience the Soul of Kolkata</h1>
+          <p class="text-white/90 mt-2 sm:mt-3 max-w-3xl mx-auto">
+            Discover hidden gems and plan your perfect trip with our AI-powered guide to the City of Joy.
+          </p>
+          <div class="mt-5 flex flex-wrap gap-3 justify-center">
+            <a href="#destinations" class="btn btn-amber h-11 px-6">Start Exploring</a>
+            <a href="{{ url_for('plan') }}" class="btn btn-ghost h-11 px-6">Ask AI Planner</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Iconic Destinations -->
+    <section id="destinations" class="space-y-4">
+      <h2 class="text-lg sm:text-xl font-bold">Iconic Destinations</h2>
+
+      <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {% set attractions = [
+          ("Victoria Memorial","https://images.unsplash.com/photo-1558431382-9b06d0507edc?fm=jpg&q=60&w=1200"),
+          ("Howrah Bridge","https://www.touristsecrets.com/wp-content/uploads/2019/08/howrah-bridge-night.jpg"),
+          ("Dakshineswar Temple","https://i.pinimg.com/originals/88/d0/1a/88d01a22698462a41d958349cb072a90.jpg"),
+          ("Kumartuli Potter's Colony","https://solopassport.com/wp-content/uploads/2022/03/Kumartuli-potters-town-in-Kolkata-1.jpeg")
+        ] %}
+
+        {% for name, img in attractions %}
+        <article class="card">
+          <div class="w-full aspect-[4/3] bg-center bg-no-repeat bg-cover rounded-xl"
+               style="background-image:url('{{ img }}')"></div>
+          <div class="p-3">
+            <h3 class="font-semibold">{{ name }}</h3>
+          </div>
+          <div class="px-3 pb-3 flex gap-2">
+            <button class="compare-single-btn flex-1 bg-blue-100 text-blue-700 py-1 rounded-full"
+                    data-place="{{ name }}">Compare</button>
+            <button class="chat-trigger flex-1 bg-blue-100 text-blue-700 py-1 rounded-full"
+                    data-poi="{{ name }}">Chat</button>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+
+      <div class="mt-2">
+        <a href="{{ url_for('plan') }}" class="btn btn-amber h-11 px-6">Plan Your Trip</a>
+      </div>
+    </section>
+
+    <!-- Three CTA rows -->
+    <section class="space-y-6">
+      <div class="flex items-center justify-between bg-surface-light rounded-2xl shadow px-4 sm:px-6 py-4">
+        <div class="pr-3">
+          <h3 class="text-lg sm:text-xl font-bold">Plan Your Perfect Trip</h3>
+          <p class="text-sm text-text-light/70">Tell our AI assistant your interests, and we’ll craft a personalized itinerary just for you.</p>
+        </div>
+        <a id="cta-planner" href="{{ url_for('plan') }}" class="btn btn-orange h-11 px-5 flex items-center gap-2 shrink-0">
+          <span class="material-symbols-outlined">auto_awesome</span><span>Go to AI Planner</span>
+        </a>
+      </div>
+
+      <div class="flex items-center justify-between bg-surface-light rounded-2xl shadow px-4 sm:px-6 py-4">
+        <div class="pr-3">
+          <h3 class="text-lg sm:text-xl font-bold">A Culinary Journey</h3>
+          <p class="text-sm text-text-light/70">Indulge in Kolkata's legendary street food and iconic sweets.</p>
+        </div>
+        <a id="cta-food" href="food.html" class="btn btn-orange h-11 px-5 flex items-center gap-2 shrink-0">
+          <span class="material-symbols-outlined">restaurant</span><span>Explore Food Guide</span>
+        </a>
+      </div>
+
+      <div class="flex items-center justify-between bg-surface-light rounded-2xl shadow px-4 sm:px-6 py-4">
+        <div class="pr-3">
+          <h3 class="text-lg sm:text-xl font-bold">Local Experiences</h3>
+          <p class="text-sm text-text-light/70">Ride a heritage tram or catch a Ganges river cruise at sunset.</p>
+        </div>
+        <a id="cta-experiences" href="experiences.html" class="btn btn-orange h-11 px-5 flex items-center gap-2 shrink-0">
+          <span class="material-symbols-outlined">local_activity</span><span>See All Experiences</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+  {% endblock %}
+
+  <!-- Footer -->
+  <footer class="mt-12 bg-secondary text-[#FFEFEF]">
+    <div class="mx-auto max-w-7xl px-6 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div>
+        <h4 class="font-bold text-white">Kolkata Tourism</h4>
+        <p class="text-sm text-[#FBE2E2]/90 mt-2">Your AI guide to the City of Joy.</p>
+      </div>
+      <div>
+        <h5 class="font-semibold text-white">Quick Links</h5>
+        <ul class="mt-3 space-y-2 text-sm">
+          <li><a class="hover:text-primary" href="{{ url_for('destinations') }}">Destinations</a></li>
+          <li><a class="hover:text-primary" href="experiences.html">Experiences</a></li>
+          <li><a class="hover:text-primary" href="food.html">Food Guide</a></li>
+          <li><a class="hover:text-primary" href="{{ url_for('plan') }}">Plan My Trip</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-semibold text-white">Support</h5>
+        <ul class="mt-3 space-y-2 text-sm">
+          <li><a class="hover:text-primary" href="#">Contact Us</a></li>
+          <li><a class="hover:text-primary" href="#">FAQ</a></li>
+          <li><a class="hover:text-primary" href="#">Terms of Service</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-semibold text-white">Connect With Us</h5>
+        <div class="flex gap-3 mt-3">
+          <a href="#" aria-label="Facebook" class="hover:text-primary">🅕</a>
+          <a href="#" aria-label="Twitter/X" class="hover:text-primary">𝕏</a>
+          <a href="#" aria-label="Instagram" class="hover:text-primary">◎</a>
+        </div>
+      </div>
+    </div>
+    <div class="text-center text-sm text-[#FBE2E2]/80 py-4 border-t border-white/20">
+      © 2025 Kolkata Tourism. All rights reserved.
+    </div>
+  </footer>
+
+  <!-- Floating Chat Button -->
+  <button id="chat-fab"
+          class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-white shadow-lg hover:brightness-95 active:scale-95">
+    <span class="material-symbols-outlined text-3xl">chat</span>
+  </button>
+
+  <!-- Base scripts -->
+  <script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
+  <script>
+    // Fallback if home.js isn't loaded
+    document.getElementById('chat-fab')?.addEventListener('click', () => {
+      window.location.href = "{{ url_for('chat_page') }}";
+    });
+  </script>
+
+  {% block page_scripts %}{% endblock %}
+</body>
+</html>
