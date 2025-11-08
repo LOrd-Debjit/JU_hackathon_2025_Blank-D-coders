@@ -1,4 +1,4 @@
-{% set TITLE = TITLE or "Kolkata Tourism" %}
+{% set TITLE = "Plan Your Kolkata Trip" %}
 <!DOCTYPE html>
 <html class="light" lang="en">
 <head>
@@ -6,12 +6,12 @@
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>{{ TITLE }}</title>
 
-  <!-- Tailwind + fonts -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+
   <script>
     tailwind.config = {
       darkMode: "class",
@@ -32,6 +32,7 @@
       }
     }
   </script>
+
   <style type="text/tailwindcss">
     body{@apply bg-background-light text-text-light font-display;}
     .btn{@apply inline-flex items-center justify-center rounded-full h-10 px-4 font-bold transition;}
@@ -39,73 +40,56 @@
     .btn-ghost{@apply bg-white/80 text-text-light hover:bg-white;}
     .btn-orange{@apply bg-accent text-white hover:brightness-95;}
     .card{@apply flex flex-col bg-surface-light rounded-xl shadow hover:shadow-lg transition;}
+
+    /* Compare modal uses same palette */
+    #compare-modal .modal-shell{@apply bg-surface-light rounded-2xl shadow border border-border-light;}
+    #compare-modal h2{ color:#4E342E; }
+    #compare-modal select{ @apply bg-white border border-border-light rounded-lg; }
   </style>
-
-  <script>
-    /* Endpoints for JS */
-    window.APP_CONFIG = {
-      chatPage: "{{ url_for('chat_page') }}",
-      planPage: "{{ url_for('plan') }}"
-    };
-  </script>
-
-  {% block head_extra %}{% endblock %}
 </head>
+
 <body class="min-h-screen">
 
   <!-- Header -->
   <header class="sticky top-0 z-50 w-full bg-background-light/80 backdrop-blur border-b border-border-light">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-14 flex items-center justify-between">
       <a href="{{ url_for('index') }}" class="flex items-center gap-2">
-        <img src="{{ url_for('static', filename='pictures/icon_ju.png') }}" alt="logo" class="w-7 h-7 rounded-lg" />
+        <img src="{{ url_for('static', filename='pictures/icon_ju.png') }}" class="w-7 h-7 rounded-lg" alt="logo"/>
         <span class="font-bold">Kolkata Tourism</span>
       </a>
-      <!-- UPDATED NAV -->
+
       <nav class="hidden md:flex items-center gap-6 text-sm">
         <a class="font-medium text-accent" href="{{ url_for('index') }}">Home</a>
-       
         <a class="hover:text-accent" href="{{ url_for('chat_page') }}">Chat</a>
       </nav>
-      <div class="hidden md:flex gap-2">
-        <button class="btn h-9 px-3 bg-secondary text-white">Login</button>
-        <button class="btn h-9 px-3 bg-accent text-white/95">Sign Up</button>
-      </div>
-      <button class="md:hidden rounded-full p-2 bg-white/80">
-        <span class="material-symbols-outlined">menu</span>
-      </button>
     </div>
   </header>
 
-  <!-- PAGE CONTENT -->
-  {% block content %}
-  <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10 sm:space-14">
+  <!-- PAGE -->
+  <main class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 space-y-10 sm:space-y-14">
 
     <!-- Hero -->
     <section class="pt-5">
       <div class="bg-cover bg-center rounded-2xl overflow-hidden"
            style="background-image:linear-gradient(rgba(30,20,18,.35),rgba(30,20,18,.8)),url('https://images.unsplash.com/photo-1536421469767-80559bb6f5e1?fm=jpg&q=60&w=2400')">
         <div class="px-6 sm:px-10 lg:px-16 py-14 sm:py-20 text-center">
-          <h1 class="text-white text-3xl sm:text-5xl font-extrabold">Experience the Soul of Kolkata</h1>
+          <h1 class="text-white text-3xl sm:text-5xl font-extrabold">Plan Your Kolkata Trip</h1>
           <p class="text-white/90 mt-2 sm:mt-3 max-w-3xl mx-auto">
-            Discover hidden gems and plan your perfect trip with our AI-powered guide to the City of Joy.
+            Explore attractions, compare places & chat with your local AI travel guide.
           </p>
-          <div class="mt-5 flex flex-wrap gap-3 justify-center">
-            <a href="#destinations" class="btn btn-amber h-11 px-6">Start Exploring</a>
-            <a href="{{ url_for('plan') }}" class="btn btn-ghost h-11 px-6">Ask AI Planner</a>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- Iconic Destinations -->
+    <!-- Destinations -->
     <section id="destinations" class="space-y-4">
       <h2 class="text-lg sm:text-xl font-bold">Iconic Destinations</h2>
 
       <div class="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
         {% set attractions = [
           ("Victoria Memorial","https://images.unsplash.com/photo-1558431382-9b06d0507edc?fm=jpg&q=60&w=1200"),
-          ("Howrah Bridge","https://www.touristsecrets.com/wp-content/uploads/2019/08/howrah-bridge-night.jpg"),
-          ("Dakshineswar Temple","https://i.pinimg.com/originals/88/d0/1a/88d01a22698462a41d958349cb072a90.jpg"),
+          ("Howrah Bridge","https://i0.wp.com/blogs.foaidindia.in/wp-content/uploads/2025/06/Length-of-Howrah-Bridge.jpg?resize=541%2C360&ssl=1"),
+          ("Dakshineswar Temple","https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj2t1pN3hhmE5EfVyG2vVIyTJpo52AL7ZY0A&s"),
           ("Kumartuli Potter's Colony","https://solopassport.com/wp-content/uploads/2022/03/Kumartuli-potters-town-in-Kolkata-1.jpeg")
         ] %}
 
@@ -113,61 +97,43 @@
         <article class="card">
           <div class="w-full aspect-[4/3] bg-center bg-no-repeat bg-cover rounded-xl"
                style="background-image:url('{{ img }}')"></div>
-          <div class="p-3">
-            <h3 class="font-semibold">{{ name }}</h3>
-          </div>
+          <div class="p-3"><h3 class="font-semibold">{{ name }}</h3></div>
           <div class="px-3 pb-3 flex gap-2">
-            <button class="compare-single-btn flex-1 bg-blue-100 text-blue-700 py-1 rounded-full"
-                    data-place="{{ name }}">Compare</button>
-            <button class="chat-trigger flex-1 bg-blue-100 text-blue-700 py-1 rounded-full"
-                    data-poi="{{ name }}">Chat</button>
+            <button class="compare-single-btn flex-1 bg-blue-100 text-blue-700 py-1 rounded-full" data-place="{{ name }}">Compare</button>
+            <button class="chat-trigger flex-1 bg-blue-100 text-blue-700 py-1 rounded-full" data-poi="{{ name }}">Chat</button>
           </div>
         </article>
         {% endfor %}
       </div>
-
-      <div class="mt-2">
-        <a href="{{ url_for('plan') }}" class="btn btn-amber h-11 px-6">Plan Your Trip</a>
-      </div>
-    </section>
-
-    <!-- Three CTA rows -->
-    <section class="space-y-6">
-      <div class="flex items-center justify-between bg-surface-light rounded-2xl shadow px-4 sm:px-6 py-4">
-        <div class="pr-3">
-          <h3 class="text-lg sm:text-xl font-bold">Plan Your Perfect Trip</h3>
-          <p class="text-sm text-text-light/70">Tell our AI assistant your interests, and we’ll craft a personalized itinerary just for you.</p>
-        </div>
-        <a id="cta-planner" href="{{ url_for('plan') }}" class="btn btn-orange h-11 px-5 flex items-center gap-2 shrink-0">
-          <span class="material-symbols-outlined">auto_awesome</span><span>Go to AI Planner</span>
-        </a>
-      </div>
-
-      <div class="flex items-center justify-between bg-surface-light rounded-2xl shadow px-4 sm:px-6 py-4">
-        <div class="pr-3">
-          <h3 class="text-lg sm:text-xl font-bold">A Culinary Journey</h3>
-          <p class="text-sm text-text-light/70">Indulge in Kolkata's legendary street food and iconic sweets.</p>
-        </div>
-        <a id="cta-food" href="food.html" class="btn btn-orange h-11 px-5 flex items-center gap-2 shrink-0">
-          <span class="material-symbols-outlined">restaurant</span><span>Explore Food Guide</span>
-        </a>
-      </div>
-
-      <div class="flex items-center justify-between bg-surface-light rounded-2xl shadow px-4 sm:px-6 py-4">
-        <div class="pr-3">
-          <h3 class="text-lg sm:text-xl font-bold">Local Experiences</h3>
-          <p class="text-sm text-text-light/70">Ride a heritage tram or catch a Ganges river cruise at sunset.</p>
-        </div>
-        <a id="cta-experiences" href="experiences.html" class="btn btn-orange h-11 px-5 flex items-center gap-2 shrink-0">
-          <span class="material-symbols-outlined">local_activity</span><span>See All Experiences</span>
-        </a>
-      </div>
     </section>
 
   </main>
-  {% endblock %}
 
-  <!-- Footer -->
+  <!-- Compare Modal -->
+  <div id="compare-modal"
+       class="fixed inset-0 hidden z-[9999] items-center justify-center bg-black/50"
+       style="backdrop-filter: blur(2px);">
+    <div id="compare-modal-content" class="modal-shell w-[92%] max-w-md p-6">
+      <h2 class="text-lg font-bold mb-4">🔍 Compare Two Attractions</h2>
+
+      <select id="compare-a" class="w-full p-2 mb-3">
+        <option value="">Select First</option>
+        {% for n, _ in attractions %}<option value="{{ n }}">{{ n }}</option>{% endfor %}
+      </select>
+
+      <select id="compare-b" class="w-full p-2 mb-5">
+        <option value="">Select Second</option>
+        {% for n, _ in attractions %}<option value="{{ n }}">{{ n }}</option>{% endfor %}
+      </select>
+
+      <div class="flex gap-3 justify-end">
+        <button id="compare-start" type="button" class="btn btn-orange">Compare</button>
+        <button id="compare-cancel" type="button" class="btn btn-ghost">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer (red bar like your screenshot) -->
   <footer class="mt-12 bg-secondary text-[#FFEFEF]">
     <div class="mx-auto max-w-7xl px-6 py-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
       <div>
@@ -207,19 +173,59 @@
 
   <!-- Floating Chat Button -->
   <button id="chat-fab"
-          class="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-white shadow-lg hover:brightness-95 active:scale-95">
+          class="fixed bottom-5 right-5 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-white shadow-lg">
     <span class="material-symbols-outlined text-3xl">chat</span>
   </button>
 
-  <!-- Base scripts -->
-  <script src="{{ url_for('static', filename='js/home.js') }}" defer></script>
+  <!-- JS -->
   <script>
-    // Fallback if home.js isn't loaded
+    // Chat Trigger → Chat with Prefill
+    document.querySelectorAll('.chat-trigger').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const poi = btn.dataset.poi || '';
+        window.location.href = "{{ url_for('chat_page') }}?q=" + encodeURIComponent(poi);
+      });
+    });
+
+    // Compare Modal Logic (same palette)
+    const modal = document.getElementById('compare-modal');
+    const selA  = document.getElementById('compare-a');
+    const selB  = document.getElementById('compare-b');
+
+    function openModal(prefill){
+      selA.value = prefill || "";
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    function closeModal(){
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    document.querySelectorAll('.compare-single-btn').forEach(btn=>{
+      btn.addEventListener('click', e=>{
+        e.stopPropagation();
+        openModal(btn.dataset.place);
+      });
+    });
+
+    document.getElementById('compare-start').addEventListener('click', ()=>{
+      const a = selA.value, b = selB.value;
+      if(!a || !b){ alert("Please select both attractions."); return; }
+      // Navigate to compare page (style that page with the same header/footer + palette)
+      window.location.href = `/compare?a=${encodeURIComponent(a)}&b=${encodeURIComponent(b)}`;
+    });
+
+    document.getElementById('compare-cancel').addEventListener('click', closeModal);
+    document.getElementById('compare-modal').addEventListener('click', e=>{
+      if(e.target === modal) closeModal();
+    });
+
+    // Floating chat button → chat page
     document.getElementById('chat-fab')?.addEventListener('click', () => {
       window.location.href = "{{ url_for('chat_page') }}";
     });
   </script>
 
-  {% block page_scripts %}{% endblock %}
 </body>
 </html>
